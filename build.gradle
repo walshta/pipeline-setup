@@ -1,0 +1,38 @@
+import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.22'
+
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = 'pipeline.setup.App.class'
+
+task wrapper(type: Wrapper) {
+    description = 'Generates gradlew and gradlew.bat scripts'
+    gradleVersion = '4.5.1'
+    distributionType = DistributionType.ALL
+}
+
+task unit(type: Test) {
+    useJUnit {
+        includeCategories 'pipeline.setup.Unit'
+        excludeCategories 'pipeline.setup.Integration'
+    }
+}
+
+task integration(type: Test) {
+    useJUnit {
+        includeCategories 'pipeline.setup.Integration'
+        excludeCategories 'pipeline.setup.Unit'
+    }
+}
