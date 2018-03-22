@@ -14,7 +14,10 @@ repositories {
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.22'
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    testRuntimeOnly    'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    testCompileOnly    'junit:junit:4.12'
+    testRuntimeOnly    'org.junit.vintage:junit-vintage-engine:5.1.0'
 }
 
 group       'pipeline.setup'
@@ -29,9 +32,9 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.enabled true
+        xml.enabled = false
+        csv.enabled = false
+        html.enabled = true
     }
 }
 
