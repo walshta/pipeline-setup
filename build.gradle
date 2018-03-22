@@ -3,6 +3,8 @@ import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
 plugins {
     id 'java'
     id 'application'
+
+    id 'jacoco'
 }
 
 repositories {
@@ -15,24 +17,61 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+group       'pipeline.setup'
+version     '0.0.1-SNAPSHOT'
+description 'Learning how to create a CI pipeline using TravisCI and either SonarCloud.io or Coveralls.io'
+
 mainClassName = 'pipeline.setup.App.class'
+
+jacoco {
+    toolVersion = '0.8.0'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'BUNDLE'
+
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.8
+            }
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.5
+            }
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.5
+            }
+            limit {
+                counter = 'CLASS'
+                value = 'MISSEDCOUNT'
+                maximum = 0
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding    = 'UTF-8'
+}
 
 task wrapper(type: Wrapper) {
     description = 'Generates gradlew and gradlew.bat scripts'
-    gradleVersion = '4.5.1'
+    gradleVersion = '4.6'
     distributionType = DistributionType.ALL
-}
-
-task unit(type: Test) {
-    useJUnit {
-        includeCategories 'pipeline.setup.Unit'
-        excludeCategories 'pipeline.setup.Integration'
-    }
-}
-
-task integration(type: Test) {
-    useJUnit {
-        includeCategories 'pipeline.setup.Integration'
-        excludeCategories 'pipeline.setup.Unit'
-    }
 }
