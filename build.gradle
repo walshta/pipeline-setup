@@ -1,10 +1,15 @@
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
 
 plugins {
+    id 'com.gradle.build-scan' version '1.13.1'
+
     id 'java'
     id 'application'
 
     id 'jacoco'
+    id 'checkstyle'
+    id 'pmd'
+    id 'findbugs'
 }
 
 repositories {
@@ -20,11 +25,16 @@ dependencies {
     testRuntimeOnly    'org.junit.vintage:junit-vintage-engine:5.1.0'
 }
 
-group       'pipeline.setup'
-version     '0.0.1-SNAPSHOT'
-description 'Learning how to create a CI pipeline using TravisCI and either SonarCloud.io or Coveralls.io'
+group       = 'pipeline.setup'
+version     = '0.0.1-SNAPSHOT'
+description = 'Learning how to create a CI pipeline using TravisCI and either SonarCloud.io or Coveralls.io'
 
 mainClassName = 'pipeline.setup.App.class'
+
+buildScan {
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
+}
 
 jacoco {
     toolVersion = '0.8.0'
@@ -67,6 +77,23 @@ jacocoTestCoverageVerification {
     }
 }
 
+checkstyle {
+    toolVersion = '8.8'
+    ignoreFailures = 'true'
+}
+
+pmd {
+    toolVersion = '6.3.0'
+    sourceSets = [sourceSets.main]
+    ignoreFailures = 'true'
+}
+
+findbugs {
+    toolVersion = '3.0.1'
+    sourceSets = [sourceSets.main]
+    effort = 'max'
+}
+
 tasks.withType(JavaCompile) {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
@@ -75,6 +102,6 @@ tasks.withType(JavaCompile) {
 
 task wrapper(type: Wrapper) {
     description = 'Generates gradlew and gradlew.bat scripts'
-    gradleVersion = '4.6'
+    gradleVersion = '4.7'
     distributionType = DistributionType.ALL
 }
