@@ -24,7 +24,6 @@ cache:
     - "$HOME/.sonar/cache"
     - "$HOME/.gradle/caches"
     - "$HOME/.gradle/wrapper"
-    - ".gradle"
 
 before_script:
   - chmod +x gradlew
