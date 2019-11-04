@@ -1,4 +1,4 @@
-name: Continuous Integretion
+name: Continuous Integration
 
 on: [push]
 
@@ -18,5 +18,5 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
         architecture: x64
-    - name: Build with Gradle
+    - name: Build
       run: ./gradlew build
