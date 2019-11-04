@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Build
 
 on: [push]
 
@@ -8,13 +8,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        java: ['8.0.x', '9.0.x', '10.0.x', 11.0.x', '12.0.x']
+        java: ['1.8', '1.11', '1.13']
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@master
     - name: Set up JDK ${{ matrix.java }}
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@master
       with:
         java-version: ${{ matrix.java }}
         architecture: x64
