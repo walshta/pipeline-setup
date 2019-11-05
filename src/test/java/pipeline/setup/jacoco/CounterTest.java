@@ -1,15 +1,15 @@
 package pipeline.setup.jacoco;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CounterTest {
     private Counter counter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         counter = new Counter();
     }
@@ -18,27 +18,27 @@ public class CounterTest {
     public void incrementWithPositive() {
         int value = 5;
 
-        assertThat(counter.increment(value), equalTo(value));
+        assertEquals(value, counter.increment(value));
     }
 
     @Test
     public void incrementWithNegative() {
         int value = -5;
 
-        assertThat(counter.increment(value), equalTo(value));
+        assertEquals(value, counter.increment(value));
     }
 
     @Test
     public void decrementWithPositive() {
         int value = 5;
 
-        assertThat(counter.decrement(value), equalTo(-value));
+        assertEquals(value * -1, counter.decrement(value));
     }
 
     @Test
     public void decrementWithNegative() {
         int value = -5;
 
-        assertThat(counter.decrement(value), equalTo(value));
+        assertEquals(value, counter.decrement(value));
     }
 }

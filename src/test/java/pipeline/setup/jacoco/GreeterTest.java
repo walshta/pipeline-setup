@@ -1,10 +1,8 @@
 package pipeline.setup.jacoco;
 
-import org.junit.Test;
-import pipeline.setup.App;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GreeterTest {
 
@@ -13,7 +11,8 @@ public class GreeterTest {
         final String defaultGreeting = "Hello World!";
         Greeter greeter = new Greeter();
         String greeting = greeter.greet();
-        assertThat(greeting, equalTo(defaultGreeting));
+
+        assertEquals(defaultGreeting, greeting);
     }
 
     @Test
@@ -21,7 +20,7 @@ public class GreeterTest {
         final String greeting = "Goodbye cruel";
         Greeter greeter = new Greeter(greeting);
 
-        assertThat(greeter.greet(), equalTo(greeting.concat(" World!")));
+        assertEquals(greeting.concat(" World!"), greeter.greet());
     }
 
     @Test
@@ -29,11 +28,12 @@ public class GreeterTest {
         final String defaultGreeting = "Hello World!";
         final String greeting = "Goodbye cruel";
         Greeter greeter = new Greeter();
-        assertThat(greeter.greet(), equalTo(defaultGreeting));
+
+        assertEquals(defaultGreeting, greeter.greet());
 
         greeter.setGreeting(greeting);
 
-        assertThat(greeter.greet(), equalTo(greeting.concat(" World!")));
+        assertEquals(greeting.concat(" World!"), greeter.greet());
     }
 
     @Test
@@ -41,10 +41,11 @@ public class GreeterTest {
         final String defaultGreeting = "Hello";
         final String greeting = "Goodbye";
         Greeter greeter = new Greeter();
-        assertThat(greeter.getGreeting(), equalTo(defaultGreeting));
+
+        assertEquals(defaultGreeting, greeter.getGreeting());
 
         greeter.setGreeting(greeting);
 
-        assertThat(greeter.getGreeting(), equalTo(greeting));
+        assertEquals(greeting, greeter.getGreeting());
     }
 }
