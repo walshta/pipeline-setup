@@ -1,6 +1,9 @@
 name: Build
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - master
 
 jobs:
   build:
@@ -20,4 +23,8 @@ jobs:
         java-version: ${{ matrix.jdk }}
 
     - name: Build with Gradle
-      run: echo "Build complete"
+      run: |
+        gradle build
+
+    - name: Pull Request on Branch Push
+      uses: vsoch/pull-request-action@1.0.1
